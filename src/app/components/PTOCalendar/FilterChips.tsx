@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Stack, Chip } from '@mui/material';
-import { FilterType } from '../types/pto';
-import { FILTER_OPTIONS, FILTER_LABELS, FILTER_COLORS } from '../constants/calendar';
+import { FilterType } from './types/pto';
+import { FILTER_OPTIONS, FILTER_LABELS, FILTER_COLORS } from './constants';
 
 interface FilterChipsProps {
   activeFilters: FilterType[];

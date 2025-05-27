@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Box, Grid, Card, CardContent, CardMedia, Typography, Container } from '@mui/material';
-import PTOCalendar from '../components/PTOCalendar';
+import PTOCalendar from '../components/PTOCalendar/PTOCalendar';
 
 interface Demo {
   id: string;

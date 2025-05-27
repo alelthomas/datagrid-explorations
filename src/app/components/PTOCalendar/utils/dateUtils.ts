@@ -1,15 +1,20 @@
-import { format, isSameDay } from 'date-fns';
+import { format } from 'date-fns';
 
-export const formatDate = (date: Date, formatStr: string = 'yyyy-MM-dd'): string => {
-  return format(date, formatStr);
+export const formatDate = (date: Date): string => {
+  return format(date, 'yyyy-MM-dd');
 };
 
 export const isCurrentDay = (date: Date): boolean => {
-  return isSameDay(date, new Date());
+  const today = new Date();
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
 };
 
 export const isDemoMonth = (date: Date): boolean => {
-  return date.getFullYear() === 2025 && date.getMonth() === 4; // May 2025
+  return date.getMonth() === 0; // January
 };
 
 export const isWithinDemoYear = (date: Date): boolean => {
@@ -17,7 +22,7 @@ export const isWithinDemoYear = (date: Date): boolean => {
 };
 
 export const findContinuousPeriods = (dates: string[]): string[][] => {
-  if (!dates.length) return [];
+  if (dates.length === 0) return [];
 
   const sortedDates = [...dates].sort();
   const periods: string[][] = [];
@@ -25,8 +30,9 @@ export const findContinuousPeriods = (dates: string[]): string[][] => {
 
   for (let i = 1; i < sortedDates.length; i++) {
     const currentDate = new Date(sortedDates[i]);
-    const previousDate = new Date(sortedDates[i - 1]);
-    const diffDays = (currentDate.getTime() - previousDate.getTime()) / (1000 * 60 * 60 * 24);
+    const prevDate = new Date(sortedDates[i - 1]);
+    const diffTime = currentDate.getTime() - prevDate.getTime();
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
     if (diffDays === 1) {
       currentPeriod.push(sortedDates[i]);
@@ -36,6 +42,9 @@ export const findContinuousPeriods = (dates: string[]): string[][] => {
     }
   }
 
-  periods.push(currentPeriod);
+  if (currentPeriod.length > 0) {
+    periods.push(currentPeriod);
+  }
+
   return periods;
 }; 

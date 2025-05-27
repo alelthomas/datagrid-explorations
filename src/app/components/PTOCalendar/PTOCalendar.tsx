@@ -28,13 +28,13 @@ import {
   endOfMonth,
   eachDayOfInterval,
 } from 'date-fns'
-import { getHolidaysForCountries } from '../api/holidays'
-import { useCalendarState } from '../hooks/useCalendarState'
-import { usePTOData } from '../hooks/usePTOData'
+import { getHolidaysForCountries } from '../../api/holidays'
+import { useCalendarState } from './hooks/useCalendarState'
+import { usePTOData } from './hooks/usePTOData'
 import { CalendarHeader } from './CalendarHeader'
 import { FilterChips } from './FilterChips'
-import { findContinuousPeriods, isCurrentDay } from '../utils/dateUtils'
-import { HolidayData } from '../types/pto'
+import { findContinuousPeriods, isCurrentDay } from './utils/dateUtils'
+import { HolidayData } from './types/pto'
 
 interface RowData {
   id: number;

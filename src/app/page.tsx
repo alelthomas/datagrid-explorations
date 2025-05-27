@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Typography, Card, CardContent, CardActionArea, Container } from '@mui/material';
-import { CalendarMonth } from '@mui/icons-material';
+import { CalendarMonth, Brush } from '@mui/icons-material';
 import Link from 'next/link';
 
 const demos = [
@@ -10,6 +10,12 @@ const demos = [
     description: 'A calendar view showing employee time off, sick days, and holidays',
     icon: <CalendarMonth sx={{ fontSize: 40, color: '#3E63DD' }} />,
     href: '/demos/pto-calendar'
+  },
+  {
+    title: 'Pixel Art Generator',
+    description: 'Create pixel art using a customizable grid with color palette',
+    icon: <Brush sx={{ fontSize: 40, color: '#3E63DD' }} />,
+    href: '/demos/pixel-art'
   }
 ];
 

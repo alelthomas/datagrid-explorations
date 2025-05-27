@@ -1,9 +1,9 @@
 'use client';
 
 import { Box } from '@mui/material';
-import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
+import { PixelArtGenerator } from '../../components/PixelArt';
 
-export default function PTOCalendarDemo() {
+export default function PixelArtDemo() {
   return (
     <Box sx={{ 
       minHeight: '100vh',
@@ -16,7 +16,7 @@ export default function PTOCalendarDemo() {
         flexDirection: 'column',
         gap: 3
       }}>
-        <PTOCalendar />
+        <PixelArtGenerator />
       </Box>
     </Box>
   );

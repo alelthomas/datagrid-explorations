@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import { FilterType } from '../types/pto';
-import { DATE_CONSTRAINTS, DEMO_YEAR } from '../constants/calendar';
+import { DATE_CONSTRAINTS, DEMO_YEAR } from '../constants';
 import { isWithinDemoYear } from '../utils/dateUtils';
 
 export const useCalendarState = () => {
