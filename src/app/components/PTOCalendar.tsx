@@ -331,8 +331,10 @@ const PTOCalendar: React.FC = () => {
             )
             const isFirstDayOfPTO = currentPTOPeriod && currentPTOPeriod[0] === params.field
             const isFirstDayOfSick = currentSickPeriod && currentSickPeriod[0] === params.field
-            const hasHoliday = cellData.hasHoliday
-            const holidayName = hasHoliday ? holidays[ptoData[params.row.employee].nationality][params.field] : ''
+            const showPTO = cellData.hasPTO && activeFilters.includes('vacation')
+            const showSick = cellData.hasSick && activeFilters.includes('sick')
+            const showHoliday = cellData.hasHoliday && activeFilters.includes('holidays')
+            const holidayName = showHoliday ? holidays[ptoData[params.row.employee].nationality][params.field] : ''
             
             const isBirthday = format(day, 'MM-dd') === ptoData[params.row.employee].birthday
 
@@ -340,20 +342,20 @@ const PTOCalendar: React.FC = () => {
               <Box
                 sx={{
                   width: '100%',
-                  height: currentPTOPeriod || currentSickPeriod ? '42px' : '100%',
-                  borderRadius: currentPTOPeriod ? 
-                    (currentPTOPeriod.length === 1 ? '20px' :
-                     currentPTOPeriod[0] === params.field ? '20px 0 0 20px' : 
-                     currentPTOPeriod[currentPTOPeriod.length - 1] === params.field ? '0 20px 20px 0' : 
+                  height: (showPTO || showSick) ? '42px' : '100%',
+                  borderRadius: showPTO ? 
+                    (currentPTOPeriod?.length === 1 ? '20px' :
+                     currentPTOPeriod?.[0] === params.field ? '20px 0 0 20px' : 
+                     currentPTOPeriod?.[currentPTOPeriod.length - 1] === params.field ? '0 20px 20px 0' : 
                      '0') : 
-                    currentSickPeriod ?
-                    (currentSickPeriod.length === 1 ? '20px' :
-                     currentSickPeriod[0] === params.field ? '20px 0 0 20px' : 
-                     currentSickPeriod[currentSickPeriod.length - 1] === params.field ? '0 20px 20px 0' : 
+                    showSick ?
+                    (currentSickPeriod?.length === 1 ? '20px' :
+                     currentSickPeriod?.[0] === params.field ? '20px 0 0 20px' : 
+                     currentSickPeriod?.[currentSickPeriod.length - 1] === params.field ? '0 20px 20px 0' : 
                      '0') : '0',
-                  backgroundColor: currentPTOPeriod // PTO days
+                  backgroundColor: showPTO
                     ? '#C3E9D7' // --jade-5
-                    : currentSickPeriod
+                    : showSick
                     ? '#fffaa0'
                     : isCurrent
                     ? '#f7f6f9'
@@ -363,30 +365,30 @@ const PTOCalendar: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: 0.5,
-                  color: currentPTOPeriod || currentSickPeriod
+                  color: (showPTO || showSick)
                     ? isCurrent
                       ? '#ffffff'
                       : 'text.secondary'
                     : 'transparent',
                   '&:hover': {
-                    backgroundColor: currentPTOPeriod || currentSickPeriod
+                    backgroundColor: (showPTO || showSick)
                       ? 'none'
                       : isCurrent
                       ? '#c7e2fe'
                       : '#e3f2fd',
                   },
-                  border: currentPTOPeriod
+                  border: showPTO
                     ? '2px solid #C3E9D7'
-                    : currentSickPeriod
+                    : showSick
                     ? '2px solid #fffaa0'
                     : 'none',
                   alignSelf: 'center',
                 }}
               >
-                {isFirstDayOfPTO && <BeachAccess sx={{ fontSize: '1rem', color: '#208368' /* --jade-11 */ }} />} 
-                {isFirstDayOfSick && <Sick sx={{ fontSize: '1rem', color: '#807d50' }} />}
-                {isBirthday && <Cake sx={{ fontSize: '1rem', color: '#75758d' }} />}
-                {hasHoliday && (
+                {isFirstDayOfPTO && showPTO && <BeachAccess sx={{ fontSize: '1rem', color: '#208368' /* --jade-11 */ }} />} 
+                {isFirstDayOfSick && showSick && <Sick sx={{ fontSize: '1rem', color: '#807d50' }} />}
+                {isBirthday && cellData.show && <Cake sx={{ fontSize: '1rem', color: '#75758d' }} />}
+                {showHoliday && (
                   <Tooltip title={holidayName}>
                     <Box
                       component="img"
@@ -402,7 +404,7 @@ const PTOCalendar: React.FC = () => {
         }
       }),
     ],
-    [daysToShow, holidays, ptoData]
+    [daysToShow, holidays, ptoData, activeFilters]
   )
 
   return (
