@@ -414,7 +414,10 @@ const PTOCalendar: React.FC = () => {
       flexDirection: 'column',
       gap: 3,
       maxWidth: '1600px',
-      mx: 'auto'
+      mx: 'auto',
+      height: '100vh',
+      py: 3,
+      overflow: 'hidden',
     }}>
       <Typography 
         variant="h4"
@@ -434,6 +437,9 @@ const PTOCalendar: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: { xs: 2, sm: 3 },
+        flex: 1,
+        minHeight: 0,
+        overflow: 'hidden',
       }}>
         <CalendarHeader
           currentDate={currentDate}
@@ -472,7 +478,9 @@ const PTOCalendar: React.FC = () => {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            pb: 2
+            flex: 1,
+            minHeight: 0,
+            overflow: 'hidden',
           }}
         >
           <Box
@@ -481,6 +489,7 @@ const PTOCalendar: React.FC = () => {
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
+              height: '100%',
             }}
           >
             <DataGridPro
@@ -507,14 +516,14 @@ const PTOCalendar: React.FC = () => {
                 }
                 return 50;
               }}
-              autoHeight
               sx={{
                 border: 'none',
+                height: '100%',
                 '& .MuiDataGrid-main': {
                   border: 'none',
                 },
                 '& .MuiDataGrid-virtualScroller': {
-                  border: 'none',
+                  overflow: 'auto',
                 },
                 '& .MuiDataGrid-filler--pinnedLeft': {
                   borderRight: 'none',
