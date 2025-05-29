@@ -78,7 +78,7 @@ const StockDashboard: React.FC = () => {
     {
       field: 'symbol',
       headerName: 'Symbol',
-      width: 100,
+      flex: 0.8,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box
@@ -95,7 +95,7 @@ const StockDashboard: React.FC = () => {
               e.currentTarget.style.display = 'none'
             }}
           />
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold', fontSize: '0.875rem'}}>
             {params.value}
           </Typography>
         </Box>
@@ -104,85 +104,88 @@ const StockDashboard: React.FC = () => {
     {
       field: 'name',
       headerName: 'Company',
-      width: 200,
+      flex: 1.2,
     },
     {
-      field: 'trend',
-      headerName: 'Trend',
-      width: 200,
-      renderCell: (params: GridRenderCellParams<StockData>) => {
-        const history = params.row.history
-        const prediction = params.row.prediction || []
-
-        const historicalData = history.map((h: { price: number }) => h.price)
-        const predictionData = prediction.map((p: { price: number }) => p.price)
-
-        const firstPrice = historicalData[0]
-        const lastPrice = historicalData[historicalData.length - 1]
-        const isTrendUp = lastPrice > firstPrice
-
-        const color = isTrendUp ? '#2e7d32' : '#d32f2f'
-        const predictionColor = isTrendUp ? '#81c784' : '#e57373'
-
-        return (
-          <Box sx={{ width: '100%', height: 40 }}>
-            <LineChart
-              series={[
-                {
-                  type: 'line',
-                  data: historicalData,
-                  color: color,
-                  area: true,
-                  showMark: false,
-                },
-                {
-                  type: 'line',
-                  data: predictionData,
-                  color: predictionColor,
-                  area: true,
-                  showMark: false,
-                },
-              ]}
-              height={40}
-              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-              xAxis={[
-                {
-                  scaleType: 'linear',
-                  data: Array.from(
-                    { length: historicalData.length },
-                    (_, i) => i
-                  ),
-                  disableTicks: true,
-                },
-              ]}
-              yAxis={[
-                {
-                  min: Math.min(...historicalData, ...predictionData) * 0.99,
-                  max: Math.max(...historicalData, ...predictionData) * 1.01,
-                  disableTicks: true,
-                },
-              ]}
-            />
-          </Box>
-        )
+        field: 'trend',
+        headerName: 'Trend',
+        flex: 1.2,
+        renderCell: (params: GridRenderCellParams<StockData>) => {
+          const history = params.row.history
+          const prediction = params.row.prediction || []
+  
+          const historicalData = history.map((h: { price: number }) => h.price)
+          const predictionData = prediction.map((p: { price: number }) => p.price)
+  
+          const firstPrice = historicalData[0]
+          const lastPrice = historicalData[historicalData.length - 1]
+          const isTrendUp = lastPrice > firstPrice
+  
+          const color = isTrendUp ? '#2e7d32' : '#d32f2f'
+          const predictionColor = isTrendUp ? '#ACDEC8' : '#FDBDBE' // jade and ruby
+  
+          return (
+            <Box sx={{ width: '100%', height: 40 }}>
+              <LineChart
+                series={[
+                  {
+                    type: 'line',
+                    data: historicalData,
+                    color: color,
+                    area: false,
+                    showMark: false,
+                  },
+                  {
+                    type: 'line',
+                    data: predictionData,
+                    color: predictionColor,
+                    area: true,
+                    showMark: false,
+                  },
+                ]}
+                height={40}
+                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                xAxis={[
+                  {
+                    scaleType: 'linear',
+                    data: Array.from(
+                      { length: historicalData.length },
+                      (_, i) => i
+                    ),
+                    disableTicks: true,
+                    disableLine: true,
+                  },
+                ]}
+                yAxis={[
+                  {
+                    min: Math.min(...historicalData, ...predictionData) * 0.99,
+                    max: Math.max(...historicalData, ...predictionData) * 1.01,
+                    disableTicks: true,
+                    disableLine: true,
+                  },
+                ]}
+              />
+            </Box>
+          )
+        },
       },
-    },
     {
       field: 'price',
       headerName: 'Price',
-      width: 120,
+      flex: 0.8,
       renderCell: (params: GridRenderCellParams<StockData>) => (
-        <Typography>${params.value.toFixed(2)}</Typography>
+        <Typography sx={{ fontSize: '0.875rem' }}>${params.value.toFixed(2)}</Typography>
       ),
     },
     {
       field: 'change',
       headerName: 'Change',
-      width: 120,
+      flex: 0.8,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography
           sx={{
             color: params.value >= 0 ? 'success.main' : 'error.main',
+            fontSize: '0.875rem',
           }}
         >
           {params.value >= 0 ? '+' : ''}
@@ -193,15 +196,26 @@ const StockDashboard: React.FC = () => {
     {
       field: 'changePercent',
       headerName: '% Change',
-      width: 120,
+      flex: 0.8,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography
           sx={{
             color: params.value >= 0 ? 'success.main' : 'error.main',
+            fontSize: '0.875rem',
           }}
         >
           {params.value >= 0 ? '+' : ''}
           {params.value.toFixed(2)}%
+        </Typography>
+      ),
+    },
+    {
+      field: 'volume',
+      headerName: 'Volume',
+      flex: 1,
+      renderCell: (params: GridRenderCellParams<StockData>) => (
+        <Typography sx={{ fontSize: '0.875rem' }}>
+          {params.value.toLocaleString()}
         </Typography>
       ),
     },
@@ -224,17 +238,16 @@ const StockDashboard: React.FC = () => {
   }
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height: '100vh',
-        p: 3,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-      }}
-    >
-      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+    <Box sx={{ 
+      width: '100%', 
+      height: '100vh',
+      p: 3,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 3,
+      position: 'relative',
+    }}>
+      <Typography variant="h4" sx={{ fontWeight: 'bold'}}>
         Stock Dashboard
       </Typography>
 
@@ -244,21 +257,60 @@ const StockDashboard: React.FC = () => {
         </Alert>
       )}
 
-      <Paper sx={{ flex: 1, p: 2 }}>
+      <Paper sx={{ 
+        flex: 1, 
+        p: 2, 
+        display: 'flex', 
+        flexDirection: 'column',
+        minHeight: 0,
+        boxShadow: 'none',
+      }}>
         <DataGridPro
           rows={stocks}
           columns={columns}
           onRowClick={(params) => setSelectedStock(params.row)}
           sx={{
+            '& .MuiDataGrid-cell': {
+              display: 'flex',
+              alignItems: 'center',
+              outline: 'none',
+              fontSize: '0.875rem',
+            },
+            '& .MuiDataGrid-row': {
+              minHeight: '52px !important',
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              minHeight: '52px !important',
+              fontSize: '0.875rem',
+            },
+            '& .MuiDataGrid-footerContainer': {
+              backgroundColor: 'grey.100',
+              borderTop: '1px solid',
+              borderColor: 'divider',
+            },
+            borderRadius: 4,
+            border: '1px solid',
+            borderColor: 'divider',
             '& .MuiDataGrid-cell:focus': {
               outline: 'none',
             },
+            '& .MuiDataGrid-columnHeader:focus': {
+              outline: 'none',
+            },
           }}
+          autoHeight={false}
+          getRowHeight={() => 'auto'}
         />
       </Paper>
 
       {selectedStock && (
-        <Paper sx={{ height: 400, p: 2 }}>
+        <Paper sx={{ 
+          height: 400, 
+          p: 2,
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 1,
+        }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
             {selectedStock.symbol} - Price History
           </Typography>
