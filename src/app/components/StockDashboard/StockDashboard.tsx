@@ -72,7 +72,7 @@ const StockDashboard: React.FC = () => {
         setSelectedStock(updatedSelectedStock)
       }
     }
-  }, [stocks])
+  }, [stocks, selectedStock])
 
   const columns: GridColDef[] = [
     {
