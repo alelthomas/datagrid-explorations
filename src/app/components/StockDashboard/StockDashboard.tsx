@@ -78,7 +78,8 @@ const StockDashboard: React.FC = () => {
     {
       field: 'symbol',
       headerName: 'Symbol',
-      flex: 0.8,
+      flex: 0,
+      width: 120,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box
@@ -104,12 +105,14 @@ const StockDashboard: React.FC = () => {
     {
       field: 'name',
       headerName: 'Company',
-      flex: 1.2,
+      flex: 1,
+      maxWidth: 350,
     },
     {
         field: 'trend',
         headerName: 'Trend',
-        flex: 1.2,
+        flex: 1,
+        maxWidth: 200,
         renderCell: (params: GridRenderCellParams<StockData>) => {
           const history = params.row.history
           const prediction = params.row.prediction || []
@@ -125,7 +128,7 @@ const StockDashboard: React.FC = () => {
           const predictionColor = isTrendUp ? '#ACDEC8' : '#FDBDBE' // jade and ruby
   
           return (
-            <Box sx={{ width: '100%', height: 40 }}>
+            <Box sx={{ width: '100%', height: 40, }}>
               <LineChart
                 series={[
                   {
@@ -139,11 +142,12 @@ const StockDashboard: React.FC = () => {
                     type: 'line',
                     data: predictionData,
                     color: predictionColor,
-                    area: true,
+                    area: false,
                     showMark: false,
                   },
                 ]}
-                height={40}
+                height={60}
+                hideLegend={true} // trying to remove the legend but it's not working
                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                 xAxis={[
                   {
@@ -172,7 +176,7 @@ const StockDashboard: React.FC = () => {
     {
       field: 'price',
       headerName: 'Price',
-      flex: 0.8,
+      flex: 1,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography sx={{ fontSize: '0.875rem' }}>${params.value.toFixed(2)}</Typography>
       ),
@@ -180,7 +184,7 @@ const StockDashboard: React.FC = () => {
     {
       field: 'change',
       headerName: 'Change',
-      flex: 0.8,
+      flex: 1,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography
           sx={{
@@ -196,7 +200,7 @@ const StockDashboard: React.FC = () => {
     {
       field: 'changePercent',
       headerName: '% Change',
-      flex: 0.8,
+      flex: 1,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography
           sx={{
@@ -259,7 +263,8 @@ const StockDashboard: React.FC = () => {
 
       <Paper sx={{ 
         flex: 1, 
-        p: 2, 
+        m: 5, 
+        p: 5, 
         display: 'flex', 
         flexDirection: 'column',
         minHeight: 0,
