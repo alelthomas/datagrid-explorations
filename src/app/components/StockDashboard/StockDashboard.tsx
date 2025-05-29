@@ -90,7 +90,6 @@ const StockDashboard: React.FC = () => {
               width: 24,
               height: 24,
               objectFit: 'contain',
-              borderRadius: '50%',
             }}
             onError={(e) => {
               e.currentTarget.style.display = 'none'
@@ -107,6 +106,7 @@ const StockDashboard: React.FC = () => {
       headerName: 'Company',
       flex: 1,
       maxWidth: 350,
+      hideable: true,
     },
     {
         field: 'trend',
@@ -177,6 +177,7 @@ const StockDashboard: React.FC = () => {
       field: 'price',
       headerName: 'Price',
       flex: 1,
+      minWidth: 100,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography sx={{ fontSize: '0.875rem' }}>${params.value.toFixed(2)}</Typography>
       ),
@@ -185,6 +186,7 @@ const StockDashboard: React.FC = () => {
       field: 'change',
       headerName: 'Change',
       flex: 1,
+      minWidth: 100,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography
           sx={{
@@ -201,6 +203,7 @@ const StockDashboard: React.FC = () => {
       field: 'changePercent',
       headerName: '% Change',
       flex: 1,
+      minWidth: 100,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography
           sx={{
@@ -217,6 +220,7 @@ const StockDashboard: React.FC = () => {
       field: 'volume',
       headerName: 'Volume',
       flex: 1,
+      minWidth: 100,
       renderCell: (params: GridRenderCellParams<StockData>) => (
         <Typography sx={{ fontSize: '0.875rem' }}>
           {params.value.toLocaleString()}
@@ -263,8 +267,8 @@ const StockDashboard: React.FC = () => {
 
       <Paper sx={{ 
         flex: 1, 
-        m: 5, 
-        p: 5, 
+        m: { xs: 2, sm: 3, md: 5 },
+        p: { xs: 2, sm: 3, md: 5 },
         display: 'flex', 
         flexDirection: 'column',
         minHeight: 0,
@@ -284,6 +288,9 @@ const StockDashboard: React.FC = () => {
             '& .MuiDataGrid-row': {
               minHeight: '52px !important',
             },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: 'grey.100',
+            },
             '& .MuiDataGrid-columnHeaders': {
               minHeight: '52px !important',
               fontSize: '0.875rem',
@@ -301,6 +308,18 @@ const StockDashboard: React.FC = () => {
             },
             '& .MuiDataGrid-columnHeader:focus': {
               outline: 'none',
+            },
+            '& [data-field="name"]': {
+              display: { xs: 'none', sm: 'flex' },
+            },
+            '& [data-field="name"] .MuiDataGrid-columnHeader': {
+              display: { xs: 'none', sm: 'flex' },
+            },
+            '& [data-field="trend"]': {
+              display: { xs: 'none', sm: 'flex' },
+            },
+            '& [data-field="trend"] .MuiDataGrid-columnHeader': {
+              display: { xs: 'none', sm: 'flex' },
             },
           }}
           autoHeight={false}
