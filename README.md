@@ -7,3 +7,4 @@ Live preview: [https://datagrid-explorations.vercel.app/](https://datagrid-explo
 ## Current implementations
 
 - PTO calendar
+- Financial dashboard
